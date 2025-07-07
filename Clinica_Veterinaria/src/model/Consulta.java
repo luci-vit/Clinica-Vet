@@ -3,25 +3,29 @@ public class Consulta {
 	
 	private String id;
 	private String horario;
-	private String nomeAnimal;
+	private int idAnimal;
 	private String especialidade;
 	private String data;
 	private String veterinarioResponsavel;
 	private String problema;
 	private String diagnostico;
 	private String medicamentos;
+	private int idTutor;
+	private int statusConsultas;
 	
-	public Consulta(String id, String horario, String nomeAnimal, String especialidade, String data,
-			String veterinarioResponsavel, String problema, String diagnostico, String medicamentos) {
+	public Consulta(String id, String horario, int idAnimal, String especialidade, String data,
+			String veterinarioResponsavel, int idTutor, String problema, String diagnostico, String medicamentos, int statusConsulta) {
 		this.id = id;
 		this.horario = horario;
-		this.nomeAnimal = nomeAnimal;
+		this.idAnimal = idAnimal;
 		this.especialidade = especialidade;
 		this.data = data;
 		this.veterinarioResponsavel = veterinarioResponsavel;
 		this.problema = problema;
 		this.diagnostico = diagnostico;
 		this.medicamentos = medicamentos;
+		this.idTutor = idTutor;
+		this.setStatusConsultas(statusConsulta);
 	}
 
 	public String getId() {
@@ -40,12 +44,12 @@ public class Consulta {
 		this.horario = horario;
 	}
 
-	public String getNomeAnimal() {
-		return nomeAnimal;
+	public int getIdAnimal() {
+		return idAnimal;
 	}
 
-	public void setNome_animal(String nome_animal) {
-		this.nomeAnimal = nome_animal;
+	public void setIdAnimal(int idAnimal) {
+		this.idAnimal = idAnimal;
 	}
 
 	public String getEspecialidade() {
@@ -94,6 +98,22 @@ public class Consulta {
 
 	public void setMedicamentos(String medicamentos) {
 		this.medicamentos = medicamentos;
+	}
+
+	public int getIdTutor() {
+		return idTutor;
+	}
+
+	public void setIdTutor(int idTutor) {
+		this.idTutor = idTutor;
+	}
+
+	public int getStatusConsultas() {
+		return statusConsultas;
+	}
+
+	public void setStatusConsultas(int statusConsultas) {
+		this.statusConsultas = statusConsultas;
 	}
 	
 	

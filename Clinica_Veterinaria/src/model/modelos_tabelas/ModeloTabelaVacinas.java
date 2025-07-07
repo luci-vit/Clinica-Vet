@@ -13,7 +13,7 @@ public class ModeloTabelaVacinas extends AbstractTableModel{
 
 	private ArrayList<Vacina> vacinas;
 
-	public ModeloTabelaVacinas(ArrayList<Vacina> vacinas) { // Construtor para definir os animais no																		// arrayList.
+	public ModeloTabelaVacinas(ArrayList<Vacina> vacinas) { // Construtor para definir os animais no arrayList.
 		super();
 		this.vacinas = vacinas;
 	}

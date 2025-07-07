@@ -6,10 +6,21 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import dao.DAOFuncionario;
+import model.Funcionario;
+import view.TelasListagem.AnimaisScreen;
+import view.TelasListagem.ConsultasScreen;
+import view.TelasListagem.ContribuidoresScreen;
+import view.TelasListagem.TutoresScreen;
+import view.TelasListagem.VacinasScreen;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JLayeredPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainScreenAdmin extends JFrame {
 
@@ -27,7 +38,7 @@ public class MainScreenAdmin extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainScreenAdmin frame = new MainScreenAdmin();
+					MainScreenAdmin frame = new MainScreenAdmin(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,13 +50,17 @@ public class MainScreenAdmin extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainScreenAdmin() {
+	public MainScreenAdmin(int idAdmin) {
+		
+		DAOFuncionario daoFuncionario = new DAOFuncionario();
+		Funcionario administrador = daoFuncionario.buscarPorId(String.valueOf(idAdmin));
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(null); 
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(31, 12, 639, 370);
@@ -57,6 +72,13 @@ public class MainScreenAdmin extends JFrame {
 		iconAnimal = new ImageIcon(imageAnimal);
 		
 		JButton btnAnimais = new JButton("Animais");
+		btnAnimais.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnimaisScreen animaisScreen = new AnimaisScreen();
+				animaisScreen.setLocationRelativeTo(null);
+				animaisScreen.setVisible(true);
+			}
+		});
 		btnAnimais.setIcon(iconAnimal);
 		btnAnimais.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAnimais.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -70,6 +92,13 @@ public class MainScreenAdmin extends JFrame {
 		iconTutor = new ImageIcon(imageTutor);
 		
 		JButton btnTutores = new JButton("Tutores");
+		btnTutores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TutoresScreen tutoresScreen = new TutoresScreen();
+				tutoresScreen.setLocationRelativeTo(null);
+				tutoresScreen.setVisible(true);
+			}
+		});
 		btnTutores.setIcon(iconTutor);
 		btnTutores.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnTutores.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -83,6 +112,13 @@ public class MainScreenAdmin extends JFrame {
 		iconConsultas = new ImageIcon(imageConsultas);
 		
 		JButton btnConsultas = new JButton("Consultas");
+		btnConsultas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultasScreen consultasScreen = new ConsultasScreen(administrador);
+				consultasScreen.setLocationRelativeTo(null);
+				consultasScreen.setVisible(true);
+			}
+		});
 		btnConsultas.setIcon(iconConsultas);
 		btnConsultas.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnConsultas.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -96,6 +132,13 @@ public class MainScreenAdmin extends JFrame {
 		iconContribuidores = new ImageIcon(imageContribuidores);
 		
 		JButton btnContribuidores = new JButton("Funcionarios");
+		btnContribuidores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ContribuidoresScreen contribuidoresScreen = new ContribuidoresScreen();
+				contribuidoresScreen.setLocationRelativeTo(null);
+				contribuidoresScreen.setVisible(true);
+			}
+		});
 		btnContribuidores.setIcon(iconContribuidores);
 		btnContribuidores.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnContribuidores.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -109,6 +152,13 @@ public class MainScreenAdmin extends JFrame {
 		iconVacina = new ImageIcon(imageVacina);
 		
 		JButton btnVacinas = new JButton("Vacina");
+		btnVacinas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VacinasScreen vacinasScreen = new VacinasScreen();
+				vacinasScreen.setLocationRelativeTo(null);
+				vacinasScreen.setVisible(true);
+			}
+		});
 		btnVacinas.setIcon(iconVacina);
 		btnVacinas.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnVacinas.setVerticalTextPosition(SwingConstants.BOTTOM);

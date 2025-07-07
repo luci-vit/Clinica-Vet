@@ -114,9 +114,17 @@ public class Login extends JFrame {
 	private void abrirTelaCorrespondente(Usuario usuarioEncontrado) {
 		
 		if(usuarioEncontrado.getFuncao().toLowerCase().equals("administrador")) {
-			MainScreenAdmin mainScreenAdmin = new MainScreenAdmin();
+			MainScreenAdmin mainScreenAdmin = new MainScreenAdmin(usuarioEncontrado.getId());
 			mainScreenAdmin.setLocationRelativeTo(null);
 			mainScreenAdmin.setVisible(true);
+		} else if (usuarioEncontrado.getFuncao().toLowerCase().equals("veterinario")) {
+			MainScreenVeterinario mainScreenVeterinario = new MainScreenVeterinario(usuarioEncontrado.getId());
+			mainScreenVeterinario.setLocationRelativeTo(null);
+			mainScreenVeterinario.setVisible(true);
+		} else if (usuarioEncontrado.getFuncao().toLowerCase().equals("recepcionista")) {
+			MainScreenRecepcionista mainScreenRecepcionista = new MainScreenRecepcionista();
+			mainScreenRecepcionista.setLocationRelativeTo(null);
+			mainScreenRecepcionista.setVisible(true);
 		}
 		
 	}

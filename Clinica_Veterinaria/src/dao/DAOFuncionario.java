@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import controller.Conexao;
 import model.Funcionario;
+import model.Usuario;
 import model.Veterinario;
 
 public class DAOFuncionario implements DAO<Funcionario>{
@@ -21,11 +22,16 @@ public class DAOFuncionario implements DAO<Funcionario>{
 			"(ID, NOME, CPF, EMAIL, TELEFONE, TURNO_TRABALHO, FUNCAO)" 
 			+ "VALUES (NULL, ?, ?, ?, ?, ?, ?)";
 	
+	private static String cADASTRAR_FUNCIONARIO_COM_USUARIO = " INSERT INTO CONTRIBUIDORES " + 
+			"(ID, NOME, CPF, EMAIL, TELEFONE, TURNO_TRABALHO, FUNCAO, USUARIO, SENHA)" 
+			+ "VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?)";
+	
 	private static String CONSULTAR_FUNCIONARIO = " SELECT * FROM CONTRIBUIDORES " + 
 			"WHERE ID = ?";
 	
 	private static String ALTERAR_FUNCIONARIO = " UPDATE CONTRIBUIDORES SET " + 
-			"NOME = ?, CPF = ?, EMAIL = ?, TELEFONE = ?, TURNO_TRABALHO = ?, FUNCAO = ?";
+			"NOME = ?, CPF = ?, EMAIL = ?, TELEFONE = ?, TURNO_TRABALHO = ?, FUNCAO = ?" +
+			" WHERE ID = ?";
 	
 	private static String LISTAR_FUNCIONARIOS = " SELECT * FROM CONTRIBUIDORES " 
 			+ " WHERE 1 = 1 ";
@@ -57,6 +63,40 @@ public class DAOFuncionario implements DAO<Funcionario>{
 			conexao.commit();
 			
 			JOptionPane.showMessageDialog(null, "Funcionario cadastrado com sucesso");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DAO.fecharConexao(preparedStatement, resultSet);
+		}
+	}
+	
+	@Override
+	public void efetuarCadastroComUsuario(Funcionario entidade, Usuario usuario) {
+
+		Connection conexao = Conexao.getInstancia().abrirConexao();
+		
+		String query = cADASTRAR_FUNCIONARIO_COM_USUARIO;
+		
+		try {
+			
+			preparedStatement = conexao.prepareStatement(query);
+			
+			int i = 1;
+			
+			preparedStatement.setString(i++, entidade.getNome());
+			preparedStatement.setString(i++, entidade.getCpf());
+			preparedStatement.setString(i++, entidade.getEmail());
+			preparedStatement.setString(i++, entidade.getTelefone());
+			preparedStatement.setString(i++, entidade.getTurnoTrabalho());
+			preparedStatement.setString(i++, entidade.getFuncao());
+	    	preparedStatement.setString(i++, usuario.getUsuario());
+			preparedStatement.setString(i++, usuario.getSenha());
+			
+			
+			preparedStatement.executeUpdate();
+			conexao.commit();
+			
+			JOptionPane.showMessageDialog(null, "Veterinario cadastrado com sucesso");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import controller.Conexao;
+import model.Usuario;
 import model.Veterinario;
 
 public class DAOVeterinario implements DAO<Veterinario>{
@@ -18,24 +19,27 @@ public class DAOVeterinario implements DAO<Veterinario>{
 	    private static ResultSet resultSet = null;
 
 	    private static String CADASTRAR_VETERINARIO = " INSERT INTO CONTRIBUIDORES " +
-	            " (ID, NOME, CPF, EMAIL, TELEFONE, TURNO_TRABALHO, FUNCAO, CFMV, ESPECIALIDADE) "
-	            + " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?) ";
+	            " (ID, NOME, CPF, EMAIL, TELEFONE, TURNO_TRABALHO, FUNCAO, CFMV, ESPECIALIDADE, USUARIO, SENHA) "
+	            + " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ";
 
 	    private static String CONSULTAR_VETERINARIO = " SELECT * FROM CONTRIBUIDORES " +
 	            " WHERE ID = ? ";
 
 	    private static String ALTERAR_VETERINARIO = " UPDATE CONTRIBUIDORES SET " +
-	            " NOME = ?, CPF = ?, EMAIL = ?, TELEFONE = ?, CFMV = ? , ESPECIALIDADE = ? ";
+	            " NOME = ?, CPF = ?, EMAIL = ?, TELEFONE = ?,  TURNO_TRABALHO = ?, FUNCAO = ?, CFMV = ?,ESPECIALIDADE = ? "
+	    		+ " WHERE ID = ? ";
 
 	    private static String LISTAR_VETERINARIOS = " SELECT * FROM CONTRIBUIDORES "
 	            + " WHERE FUNCAO == 'veterinario' ";
 
 	    private static String EXCLUIR_VETERINARIOS = " DELETE FROM CONTRIBUIDORES "
 	            + " WHERE ID = ? ";
-
+	    
+		private static String BUSCAR_VETERINARIO_NOME = " SELECT ID FROM CONTRIBUIDORES WHERE NOME = ?";
+	    
 	    @Override
-		public void efetuarCadastro(Veterinario entidade) {
-			
+	    public void efetuarCadastroComUsuario(Veterinario entidade, Usuario usuario) {
+
 			Connection conexao = Conexao.getInstancia().abrirConexao();
 			
 			String query = CADASTRAR_VETERINARIO;
@@ -54,6 +58,9 @@ public class DAOVeterinario implements DAO<Veterinario>{
 				preparedStatement.setString(i++, entidade.getFuncao());
 				preparedStatement.setString(i++, entidade.getCfmv());
 				preparedStatement.setString(i++, entidade.getEspecialidade());
+		    	preparedStatement.setString(i++, usuario.getUsuario());
+				preparedStatement.setString(i++, usuario.getSenha());
+				
 				
 				preparedStatement.executeUpdate();
 				conexao.commit();
@@ -64,7 +71,7 @@ public class DAOVeterinario implements DAO<Veterinario>{
 			} finally {
 				DAO.fecharConexao(preparedStatement, resultSet);
 			}
-		}
+	    }
 
 		@Override
 		public Veterinario buscarPorId(String id) {
@@ -184,6 +191,32 @@ public class DAOVeterinario implements DAO<Veterinario>{
 				DAO.fecharConexao(preparedStatement, resultSet);
 			}
 		}
+		
+		public String buscarVeterinarioPorNome(String nome) {
+			Connection conexao = Conexao.getInstancia().abrirConexao();
+			String query = BUSCAR_VETERINARIO_NOME;
+			int id = -1;
+			
+			try {
+				PreparedStatement preparedStatementaux = conexao.prepareStatement(query);
+				preparedStatementaux.setString(1, nome);
+				ResultSet resultSetaux = preparedStatementaux.executeQuery();
+				
+				if(resultSetaux.next()) {
+					id = resultSetaux.getInt("ID");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				Conexao.getInstancia().fecharConexao();
+			}
+			
+			return String.valueOf(id);
+			
+		}
+		
+
 
 
 }

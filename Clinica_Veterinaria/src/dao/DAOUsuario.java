@@ -38,8 +38,8 @@ public class DAOUsuario {
 															// preparedStatement
 
 			while (resultSet.next()) {
-				usuario = new Usuario(resultSet.getInt("ID"), resultSet.getString("USUARIO"),
-						resultSet.getString("SENHA"), resultSet.getString("FUNCAO"));
+				usuario = new Usuario(resultSet.getString("USUARIO"), resultSet.getString("SENHA"),
+						resultSet.getInt("ID"), resultSet.getString("FUNCAO"));
 			}
 			
 		} catch (SQLException e) {

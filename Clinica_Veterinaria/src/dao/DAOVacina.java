@@ -16,21 +16,23 @@ public class DAOVacina implements DAO<Vacina>{
 	private static PreparedStatement preparedStatement = null;
 	private static ResultSet resultSet = null;
 	
-	private static String CADASTRAR_VACINA = " INSERT INTO VACINA "
-			+ " (ID, FABRICANTE, VALIDADE, TEMPOIMUNIDADE, NOME) "
+	private static String CADASTRAR_VACINA = " INSERT INTO VACINAS "
+			+ " (ID, FABRICANTE, VALIDADE, TEMPO_IMUNIDADE_MESES, NOME) "
 			+ " VALUES (NULL, ?, ?, ?, ?) ";
 	 
-	private static String ALTERAR_VACINA = " UPDATE ANIMAL SET " 
-			+ " FABRICANTE = ?, VALIDADE = ?, TEMPOIMUNIDADE = ?, NOME = ? ";
+	private static String ALTERAR_VACINA = " UPDATE VACINAS SET " 
+			+ " FABRICANTE = ?, VALIDADE = ?, TEMPO_IMUNIDADE_MESES = ?, NOME = ? ";
 	
-	private static String CONSULTAR_VACINA = " SELECT * FROM VACINA " 
+	private static String CONSULTAR_VACINA = " SELECT * FROM VACINAS " 
 			+ " WHERE ID = ? ";
 	
-	private static String LISTAR_VACINAS = " SELECT * FROM VACINA "
+	private static String LISTAR_VACINAS = " SELECT * FROM VACINAS "
 			+ " WHERE 1=1 ";
 	
-	private static String EXCLUIR_VACINA = " DELETE FROM VACINA "
+	private static String EXCLUIR_VACINA = " DELETE FROM VACINAS "
 			+ " WHERE ID = ? ";
+	
+	private static  String CONSULTAR_POR_NOME = "SELECT * FROM VACINAS WHERE NOME = ?";
 
 
 	@Override
@@ -80,7 +82,7 @@ public class DAOVacina implements DAO<Vacina>{
 			
 			while(resultSet.next()) {
 				vacina = new Vacina(resultSet.getString("ID"), resultSet.getString("FABRICANTE"), resultSet.getString("VALIDADE"),
-						resultSet.getString("TEMPOIMUNIDADE"), resultSet.getString("NOME"));
+						resultSet.getString("TEMPO_IMUNIDADE_MESES"), resultSet.getString("NOME"));
 			}
 			
 		} catch (SQLException e) {
@@ -94,6 +96,38 @@ public class DAOVacina implements DAO<Vacina>{
 		}
 
 		return vacina;
+	}
+	
+	public Vacina buscarPorNome(String nome) {
+	    Connection conexao = Conexao.getInstancia().abrirConexao();
+	    Vacina vacina = null;
+
+	    try {
+	        preparedStatement = conexao.prepareStatement(CONSULTAR_POR_NOME);
+	        preparedStatement.setString(1, nome);
+	        resultSet = preparedStatement.executeQuery();
+
+	        if (resultSet.next()) {
+	            vacina = new Vacina(
+	                resultSet.getString("ID"),
+	                resultSet.getString("FABRICANTE"),
+	                resultSet.getString("VALIDADE"),
+	                resultSet.getString("TEMPO_IMUNIDADE_MESES"),
+	                resultSet.getString("NOME")
+	            );
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        DAO.fecharConexao(preparedStatement, resultSet);
+	    }
+
+	    if (vacina == null) {
+	        JOptionPane.showMessageDialog(null, "Vacina não encontrada com o nome informado", "", JOptionPane.WARNING_MESSAGE);
+	    }
+
+	    return vacina;
 	}
 
 	@Override
@@ -137,7 +171,7 @@ public class DAOVacina implements DAO<Vacina>{
 			
 			while(resultSet.next()) {
 				lista_vacinas.add(new Vacina(resultSet.getString("ID"), resultSet.getString("FABRICANTE"), resultSet.getString("VALIDADE"),
-						resultSet.getString("TEMPOIMUNIDADE"), resultSet.getString("NOME")));
+						resultSet.getString("TEMPO_IMUNIDADE_MESES"), resultSet.getString("NOME")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

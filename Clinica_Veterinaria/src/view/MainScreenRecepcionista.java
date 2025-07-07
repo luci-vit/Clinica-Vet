@@ -7,8 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import view.TelasListagem.AnimaisScreen;
+import view.TelasListagem.ConsultasScreen;
+import view.TelasListagem.TutoresScreen;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainScreenRecepcionista extends JFrame {
 
@@ -52,6 +59,13 @@ public class MainScreenRecepcionista extends JFrame {
 		iconAnimal = new ImageIcon(imageAnimal);
 		
 		JButton btnAnimais = new JButton("Animais");
+		btnAnimais.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AnimaisScreen animaisScreen = new AnimaisScreen();
+				animaisScreen.setLocationRelativeTo(null);
+				animaisScreen.setVisible(true);
+			}
+		});
 		btnAnimais.setIcon(iconAnimal);
 		btnAnimais.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnAnimais.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -65,6 +79,13 @@ public class MainScreenRecepcionista extends JFrame {
 		iconTutor = new ImageIcon(imageTutor);
 		
 		JButton btnTutores = new JButton("Tutores");
+		btnTutores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TutoresScreen tutoresScreen = new TutoresScreen();
+				tutoresScreen.setLocationRelativeTo(null);
+				tutoresScreen.setVisible(true);
+			}
+		});
 		btnTutores.setIcon(iconTutor);
 		btnTutores.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnTutores.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -78,6 +99,13 @@ public class MainScreenRecepcionista extends JFrame {
 		iconConsultas = new ImageIcon(imageConsultas);
 		
 		JButton btnConsultas = new JButton("Consultas");
+		btnConsultas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultasScreen consultasScreen = new ConsultasScreen(null);
+				consultasScreen.setLocationRelativeTo(null);
+				consultasScreen.setVisible(true);
+			}
+		});
 		btnConsultas.setIcon(iconConsultas);
 		btnConsultas.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnConsultas.setVerticalTextPosition(SwingConstants.BOTTOM);

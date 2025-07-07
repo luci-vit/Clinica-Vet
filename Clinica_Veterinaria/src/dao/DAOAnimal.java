@@ -23,6 +23,8 @@ public class DAOAnimal  implements DAO<Animal>{
 	
 	private static String CONSULTAR_ANIMAL = " SELECT * FROM ANIMAL " + "WHERE ID = ?";
 	
+	private static String CONSULTAR_ANIMAL_NOME_E_TUTOR = " SELECT ID FROM ANIMAL " + " WHERE NOME = ? AND ID_TUTOR = ? ";
+	
 	private static String ALTERAR_ANIMAL = " UPDATE ANIMAL SET " + 
 	" NOME = ?, ESPECIE = ?, RACA = ?, DATA_NASCIMENTO = ?, ID_TUTOR = ? " + " WHERE ID = ? ";
 	
@@ -198,6 +200,30 @@ public class DAOAnimal  implements DAO<Animal>{
 		
 		return id;
 		
+	}
+	
+	public int bucarIdAnimal(String nomeAnimal,  int idTutor) {
+		Connection conexao = Conexao.getInstancia().abrirConexao();
+		String query = CONSULTAR_ANIMAL_NOME_E_TUTOR;
+		int id = -1;
+		
+		try {
+			PreparedStatement preparedStatementaux = conexao.prepareStatement(query);
+			preparedStatementaux.setString(1, nomeAnimal);
+			preparedStatementaux.setInt(2, idTutor);
+			ResultSet resultSetaux = preparedStatementaux.executeQuery();
+			
+			if(resultSetaux.next()) {
+				id = resultSetaux.getInt("ID");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			Conexao.getInstancia().fecharConexao();
+		}
+		
+		return id;
 	}
 
 }

@@ -5,9 +5,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import controller.Conexao;
+import model.Usuario;
 
 public interface DAO<T>{
-	public void efetuarCadastro(T entidade);
+	default void efetuarCadastro(T entidade) {}
+	default void efetuarCadastroComUsuario(T entidade, Usuario usuario) {}
 	public T buscarPorId(String id);
 	public void editarDados(T entidade, String id);
 	public ArrayList<T> listarTodos();

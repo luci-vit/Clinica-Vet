@@ -9,7 +9,7 @@ import model.Consulta;
 public class ModeloTabelaConsultas extends AbstractTableModel {
 
 	private static final String[] columns = {
-			"Id", "Horario", "Nome_Animal", "Especialidade", "Data", "Veterinario_Responsavel", "Problema", "Diagn\u00F3sticos", "Medicamentos"
+			"Id", "Horario", "Nome_Animal", "Especialidade", "Data", "Veterinario_Responsavel", "Problema", "Diagn\u00F3sticos", "Medicamentos", "Cpf_Tutor"
 		};
 
 	private ArrayList<Consulta> consultas;
@@ -37,7 +37,7 @@ public class ModeloTabelaConsultas extends AbstractTableModel {
 		} else if (columnIndex == 1) {
 			return consulta.getHorario();
 		} else if (columnIndex == 2) {
-			return consulta.getNomeAnimal();
+			return consulta.getIdAnimal();
 		} else if (columnIndex == 3) {
 			return consulta.getEspecialidade();
 		} else if (columnIndex == 4) {
@@ -50,6 +50,8 @@ public class ModeloTabelaConsultas extends AbstractTableModel {
 			return consulta.getDiagnostico();
 		} else if(columnIndex == 8) {
 			return consulta.getMedicamentos();
+		}else if(columnIndex == 9){
+			return consulta.getIdTutor();
 		}else {
 			return null;
 		}

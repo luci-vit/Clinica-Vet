@@ -58,7 +58,7 @@ public class CadastroAnimal extends JFrame {
 	 * Create the frame.
 	 */
 	public CadastroAnimal(Animal animal, AnimaisScreen animaisScreen) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 592, 421);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
